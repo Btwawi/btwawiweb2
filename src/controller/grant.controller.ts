@@ -1,7 +1,7 @@
 import { Response, Request } from 'express';
 import { createGrant, validateWithEmail, findGrant } from '../service/grant/grant.service';
-import { get } from 'lodash';
 import log from '../logger';
+import { sendBusinessGrantMail } from '../utils/sendMail'
 
 export const createGrantHandler = async (req:Request, res:Response) => {
     try{
@@ -19,6 +19,8 @@ export const createGrantHandler = async (req:Request, res:Response) => {
 
         const business = await createGrant(newBusiness);
 
+        await sendBusinessGrantMail(business.businessEmailAddress);
+
         return res.status(200).json({
             success: true,
             data: {
@@ -26,6 +28,7 @@ export const createGrantHandler = async (req:Request, res:Response) => {
             },
             message: "Grant created successfully!"
         })
+
 
     } catch (error) {
         log.error(error);
