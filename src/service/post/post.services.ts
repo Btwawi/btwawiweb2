@@ -1,12 +1,13 @@
 import {
-  DocumentDefinition,
   FilterQuery,
   UpdateQuery,
   QueryOptions,
 } from "mongoose";
 import Post, { PostDocument } from "../../model/post.model";
 
-export function createPost(input: DocumentDefinition<PostDocument>) {
+export type PostInput = Omit<PostDocument, "_id" | "__v" | "createdAt" | "updatedAt">;
+
+export function createPost(input: PostInput) {
   return Post.create(input);
 }
 

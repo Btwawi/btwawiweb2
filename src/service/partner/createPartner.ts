@@ -1,5 +1,4 @@
 import {
-  DocumentDefinition,
   FilterQuery,
   UpdateQuery,
   QueryOptions,
@@ -7,8 +6,10 @@ import {
 import { Partner, PartnerDocument } from "../../model/partner.model";
 import { omit } from "lodash";
 
+export type PartnerInput = Omit<PartnerDocument, "_id" | "__v" | "createdAt" | "updatedAt">;
+
 export const createPartner = async (
-  input: DocumentDefinition<PartnerDocument>
+  input: PartnerInput
 ) => {
   return await Partner.create(input);
 };

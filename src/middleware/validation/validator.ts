@@ -345,6 +345,41 @@ export const addAddressValidationRules = () => {
   ];
 };
 
+export const grantValidationRules = () => {
+  return [
+    body("ownerFullName").not().isEmpty().withMessage("Owner's Full Name is required"),
+    body("businessName").not().isEmpty().withMessage("Business name is required"),
+    body("businessEmailAddress").not().isEmpty().withMessage("Business Email Adress is required"),
+    body("businessPhoneNumber").not().isEmpty().withMessage("Business phone number is required"),
+    body("businessCategory").not().isEmpty().withMessage("Business category is required"),
+    body("yearsInBusiness").not().isEmpty().withMessage("Years in Business is required"),
+    body("stateOfOperation").not().isEmpty().withMessage("State of operation is required"),
+    body("businessOnlinePlatform").not().isEmpty().withMessage("Business online platform such as website and social media handle is required"),
+    body("businessDescription").not().isEmpty().withMessage("Business description is required")
+        .isLength({ min: 200 }).withMessage("Business description must be at least 200 characters"),
+    body("businessContribution").not().isEmpty().withMessage("Business contribution is required")
+        .isLength({ min: 300 }).withMessage("Business contribution must be at least 300 characters"),
+    body("businessShariahCompliance").not().isEmpty().withMessage("Shariah compliance information is required")
+        .isLength({ min: 200 }).withMessage("Shariah compliance information must be at least 200 characters"),
+    body("howGrantWillBenefit").not().isEmpty().withMessage("Grant benefit explanation is required")
+        .isLength({ min: 600 }).withMessage("Grant benefit explanation must be at least 600 characters"),
+    body("haveAttendedBtwawi").isBoolean().withMessage("Btwawi attendance must be true or false"),
+    body("supportingDocuments").isArray({ min: 1 }).withMessage("You must upload at least one document")
+        .custom((documents) => {
+        const validExtensions = ['.pdf', '.doc', '.docx', '.jpg', '.jpeg', '.png'];
+        const invalidDocs = documents.filter((doc: string) => {
+          const extension = doc.toLowerCase().substring(doc.lastIndexOf('.'));
+          return !validExtensions.includes(extension);
+        });
+        
+        if (invalidDocs.length > 0) {
+          throw new Error('All documents must be in PDF, DOC, DOCX, JPG, JPEG, or PNG format');
+        }
+        return true;
+      })
+  ];
+}
+
 export const validate = (req: Request, res: Response, next: NextFunction) => {
   const errors = validationResult(req);
   if (errors.isEmpty()) {

@@ -1,14 +1,14 @@
 import {
-    DocumentDefinition,
     FilterQuery,
     UpdateQuery,
     QueryOptions,
   } from "mongoose";
   import Order, { OrderDocument } from '../../model/order.model'
   
-  
+  export type OrderInput = Omit<OrderDocument, "_id" | "__v" | "createdAt" | "updatedAt">;
+
   export const createOrder = async( 
-      input: DocumentDefinition<OrderDocument>
+      input: OrderInput
   ) => {
       return await Order.create(input);
   }

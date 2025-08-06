@@ -1,11 +1,12 @@
 import express from "express";
 import dotenv from "dotenv";
+dotenv.config();
+
 import helmet from "helmet";
 import multer from "multer";
 import log from "./logger"; //logger doesnt block I/O like console.log does
 import connect from "./db/connect";
 import cors from "cors";
-dotenv.config();
 
 import Route from "./routes/routes";
 
@@ -54,9 +55,9 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use("/api/v1/", Route);
 app.get("/", (req, res) =>
-  res.status(200).send("Welcome to Hizbas Variety Store")
+  res.status(200).send("Welcome to BTWAWI")
 );
-app.get("*", (req, res) => res.status(404).send("Page not found"));
+// app.use("*", (req, res) => res.status(404).send("Page not found"));
 
 app.listen(PORT, HOST, () => {
   log.info(
