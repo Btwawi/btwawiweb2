@@ -1,5 +1,6 @@
 import { body, validationResult } from "express-validator";
 import { Request, Response, NextFunction } from "express";
+import { isEmpty } from "lodash";
 
 export const userValidationRules = () => {
   return [
@@ -9,6 +10,7 @@ export const userValidationRules = () => {
     body("password").isLength({ min: 8 }),
   ];
 };
+
 export const partnerValidationRules = () => {
   return [
     //validation email
@@ -20,6 +22,7 @@ export const partnerValidationRules = () => {
     body("phoneNum").not().isEmpty(),
   ];
 };
+
 export const attendeeUserValidationRules = () => {
   return [
     body("phoneNum").not().isEmpty(),
@@ -33,6 +36,7 @@ export const attendeeUserValidationRules = () => {
     body("agreement").not().isEmpty(),
   ];
 };
+
 export const vendorUserValidationRules = () => {
   return [
     body("vendorCompanyName").not().isEmpty(),
@@ -377,6 +381,22 @@ export const grantValidationRules = () => {
         }
         return true;
       })
+  ];
+};
+
+export const nominationValidationRules = () => {
+  return [
+    body("fullName").not().isEmpty().withMessage("Full Name is required"),
+    body("emailAddress").not().isEmpty().withMessage("Email Address is required"),
+    body("phoneNumber").not().isEmpty().withMessage("Phone number is required"),
+    body("nameOfNominatedBusiness").not().isEmpty().withMessage("Business name is required"),
+    body("businessOwnerName").optional().isString().withMessage("Business owner name must be a string"),
+    body("businessOwnerContact").not().isEmpty().withMessage("Business contact is required"),
+    body("businessCategory").not().isEmpty().withMessage("Business category is required"),
+    body("reasonForNomination").not().isEmpty().withMessage("Your reason for nomination is required")
+        .isLength({ min: 200 }).withMessage("Your reason for nomination should not be less than 200 characters"),
+    body("whatMakesBusinessHalal").not().isEmpty().withMessage("The Halal feature of the business is required")
+        .isLength({ min: 200 }).withMessage("The Halal Feature should not be less than 200 characters"),
   ];
 }
 
