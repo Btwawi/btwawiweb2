@@ -135,6 +135,7 @@ export const createAttendeeLagosUserHandler = async (
     res.status(409).send(newError.message);
   }
 };
+
 export const createAttendeeAbujaUserHandler = async (
   req: Request,
   res: Response
@@ -270,6 +271,7 @@ export const createVendorLagosUserHandler = async (
     res.status(409).send(newError.message);
   }
 };
+
 export const createVendorAbujaUserHandler = async (
   req: Request,
   res: Response
