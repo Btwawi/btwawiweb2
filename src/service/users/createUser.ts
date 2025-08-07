@@ -1,5 +1,4 @@
 import {
-  DocumentDefinition,
   FilterQuery,
   UpdateQuery,
   QueryOptions,
@@ -14,19 +13,23 @@ import {
 } from "../../model/user.model";
 import { omit } from "lodash";
 
+export type UserWithRoleInput = Omit<UserWithRoleDocument, "_id" | "__v" | "createdAt" | "updatedAt">;;
+export type AttendeeUserInput = Omit<AttendeeUserDocument, "_id" | "__v" | "createdAt" | "updatedAt">;
+export type VendorUserInput = Omit<VendorUserDocument, "_id" | "__v" | "createdAt" | "updatedAt">;
+
 export const createUserWithRole = async (
-  input: DocumentDefinition<UserWithRoleDocument>
+  input: UserWithRoleInput
 ) => {
   return await User.create(input);
 };
 export const createUser = async (
-  input: DocumentDefinition<AttendeeUserDocument>
+  input: AttendeeUserInput
 ) => {
   return await AttendeeUser.create(input);
 };
 
 export const createVendorUser = async (
-  input: DocumentDefinition<VendorUserDocument>
+  input: VendorUserInput
 ) => {
   return await VendorUser.create(input);
 };
@@ -49,33 +52,33 @@ export const findUser = async (
   query: FilterQuery<AttendeeUserDocument>,
   options: QueryOptions = {}
 ) => {
-  return await AttendeeUser.findOne(query, options).lean();
+  return await AttendeeUser.findOne(query, {}, options).lean();
 };
 export const findUserWithRole = async (
   query: FilterQuery<UserWithRoleDocument>,
   options: QueryOptions = {}
 ) => {
-  return await AttendeeUser.findOne(query, options).lean();
+  return await AttendeeUser.findOne(query, {}, options).lean();
 };
 
 export const findVendorUser = async (
   query: FilterQuery<VendorUserDocument>,
   options: QueryOptions = {}
 ) => {
-  return await VendorUser.findOne(query, options).lean();
+  return await VendorUser.findOne(query, {}, options).lean();
 };
 
 export const findUsers = async (
   query: FilterQuery<AttendeeUserDocument>,
   options: QueryOptions
 ) => {
-  return await AttendeeUser.find(query, options).lean();
+  return await AttendeeUser.find(query, {}, options).lean();
 };
 export const findVendorUsers = async (
   query: FilterQuery<VendorUserDocument>,
   options: QueryOptions
 ) => {
-  return await VendorUser.find(query, options).lean();
+  return await VendorUser.find(query, {}, options).lean();
 };
 
 export const findAndUpdate = async (

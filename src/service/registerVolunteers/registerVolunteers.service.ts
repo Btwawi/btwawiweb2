@@ -1,5 +1,4 @@
 import {
-  DocumentDefinition,
   FilterQuery,
   UpdateQuery,
   QueryOptions,
@@ -10,8 +9,10 @@ import {
 } from "../../model/registration.model";
 import { omit } from "lodash";
 
+export type RegistrationInput = Omit<RegistrationDocument, "_id" | "__v" | "createdAt" | "updatedAt">;
+
 export const createVolunteer = async (
-  input: DocumentDefinition<RegistrationDocument>
+  input: RegistrationInput
 ) => {
   return await Registration.create(input);
 };
@@ -34,14 +35,14 @@ export const findVolunteer = async (
   query: FilterQuery<RegistrationDocument>,
   options: QueryOptions = {}
 ) => {
-  return await Registration.findOne(query, options).lean();
+  return await Registration.findOne(query, {}, options).lean();
 };
 
 export const findVolunteers = async (
   query: FilterQuery<RegistrationDocument>,
   options: QueryOptions
 ) => {
-  return await Registration.find(query, options).lean();
+  return await Registration.find(query, {}, options).lean();
 };
 
 export const findAndUpdate = async (

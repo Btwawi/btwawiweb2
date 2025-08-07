@@ -14,9 +14,9 @@ const UserRouter = express.Router();
 // create user 
 UserRouter.post('/user-create', userValidationRules(), validate, createUserHandler)
 UserRouter.post('/create-attendee-lagos', attendeeUserValidationRules(), validate, createAttendeeLagosUserHandler)
-UserRouter.post('/vendor-create-lagos', vendorUserValidationRules(), validate, createVendorAbujaUserHandler)
+UserRouter.post('/vendor-create-lagos', vendorUserValidationRules(), validate, createVendorLagosUserHandler)
 UserRouter.post('/create-attendee-abuja', attendeeUserValidationRules(), validate, createAttendeeAbujaUserHandler)
-UserRouter.post('/vendor-create-abuja', vendorUserValidationRules(), validate, createVendorLagosUserHandler)
+UserRouter.post('/vendor-create-abuja', vendorUserValidationRules(), validate, createVendorAbujaUserHandler)
 
 
 export default UserRouter;

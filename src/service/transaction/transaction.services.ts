@@ -1,15 +1,14 @@
-
 import {
-    DocumentDefinition,
     FilterQuery,
     UpdateQuery,
     QueryOptions,
   } from "mongoose";
   import Transaction, { TransactionDocument } from '../../model/transaction.model'
   
-  
+  export type TransactionInput = Omit<TransactionDocument, "_id" | "__v" | "createdAt" | "updatedAt" >;
+
   export const createTransaction = async( 
-      input: DocumentDefinition<TransactionDocument>
+      input: TransactionInput
   ) => {
       return await Transaction.create(input);
   }

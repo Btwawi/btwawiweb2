@@ -1,16 +1,11 @@
 import express from 'express';
 import { Request, Response } from 'express';
 import UserRouter from './users/routes';
-// import PostRouter from './post/routes';
-// import ProductRouter from "./product/router";
-// import CartRouter from "./cart/router";
-// import StoreRouter from "./store/router"
-// import WishlistRouter from "./wishlist/routes"
-// import CategoryRouter from './category/route';
 import OrderRouter from './order/routes';
 import PartnerRouter from './partner/routes';
 import PostRouter from './post/routes';
 import VolunteerRouter from './volunteer/routes';
+import GrantRouter from './grant/routes';
 
 const Router = express.Router();
 
@@ -22,5 +17,6 @@ Router.use("/order", OrderRouter);
 Router.use("/post", PostRouter);
 Router.use("/partner", PartnerRouter);
 Router.use("/volunteer", VolunteerRouter);
+Router.use("/grant", GrantRouter);
 
 export default Router;

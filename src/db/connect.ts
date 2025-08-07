@@ -3,14 +3,11 @@ import config from 'config';
 import log from '../logger'
 
 
-function connect(){
+function  connect(){
     const dbUri = process.env.NODE_ENV === 'development' ?  process.env.DEV_DATABASE as string : process.env.PROD_DATABASE as string;
     // const dbUri = config.get("dbUri") as string;
 
-    return mongoose.connect(dbUri, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    } as ConnectOptions)
+    return mongoose.connect(dbUri)
     .then(() =>{
         log.info("Database connected")
     })
