@@ -1,4 +1,4 @@
-import { FilterQuery, UpdateQuery, QueryOptions } from "mongoose"
+import { FilterQuery, QueryOptions } from "mongoose"
 import Grant from "../../model/grant.model";
 import { IGrant } from "../../model/grant.model";
 import { omit } from 'lodash'
