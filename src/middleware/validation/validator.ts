@@ -400,6 +400,104 @@ export const nominationValidationRules = () => {
   ];
 }
 
+export const boothRegistrationValidationRules = () => {
+  return [
+    body("email").not().isEmpty().withMessage("Email is required").isEmail().withMessage("Please provide a valid email address"),
+    
+    body("vendorCompanyName").not().isEmpty().withMessage("Vendor/Company name is required")
+      .isLength({ min: 2, max: 100 }).withMessage("Company name must be between 2 and 100 characters"),
+    
+    body("contactPersonName").not().isEmpty().withMessage("Contact person name is required")
+      .isLength({ min: 2, max: 50 }).withMessage("Contact person name must be between 2 and 50 characters").trim(),
+    
+    body("phoneNumber").not().isEmpty().withMessage("Phone number is required")
+      .isMobilePhone('any', { strictMode: false }).withMessage("Please provide a valid phone number")
+      .trim(),
+    
+    body("website").optional()
+      .isURL({ 
+        protocols: ['http', 'https'], 
+        require_protocol: false 
+      }).withMessage("Please provide a valid website URL"),
+    
+    body("socialMediaHandles").not().isEmpty().withMessage("Social media handles are required")
+      .isLength({ min: 3, max: 200 }).withMessage("Social media handles must be between 3 and 200 characters")
+      .trim(),
+    
+    body("pastEditionAttendance").not().isEmpty().withMessage("Past edition attendance information is required"),
+    
+    body("experience").optional().isLength({ max: 500 }).withMessage("Experience description cannot exceed 500 characters")
+      .trim(),
+    
+    body("businessCategory").not().isEmpty().withMessage("Business category is required"),
+    
+    body("businessDescription").not().isEmpty().withMessage("Business description is required")
+      .isLength({ min: 100, max: 1000 }).withMessage("Business description must be between 20 and 1000 characters")
+      .trim(),
+    
+    body("exhibitionRequirements").not().isEmpty().withMessage("Exhibition requirements are required")
+      .isLength({ min: 10, max: 500 }).withMessage("Exhibition requirements must be between 10 and 500 characters")
+      .trim(),
+    
+    body("exhibitionBudget").not().isEmpty().withMessage("Exhibition budget is required"),
+    
+    body("agreeToGuidelines")
+      .not().isEmpty().withMessage("You must agree to the guidelines")
+      .isBoolean().withMessage("Agreement to guidelines must be a boolean value")
+      .custom((value) => {
+        if (value !== true) {
+          throw new Error("You must agree to abide by the event guidelines and ensure Halal compliance");
+        }
+        return true;
+      })
+  ];
+}
+
+export const registrationValidationRules = () => {
+  return [
+    body("email").not().isEmpty().withMessage("Email is required")
+      .isEmail().withMessage("Please provide a valid email address")
+      .normalizeEmail(),
+
+    body("fullName").not().isEmpty().withMessage("Full Name is required")
+      .isLength({ min: 2, max: 100 })
+      .withMessage("Full Name must be between 2 and 100 characters"),
+
+    body("stateOfResidence").not().isEmpty().withMessage("State of Residence is required")
+      .isLength({ min: 2, max: 50 })
+      .withMessage("State of Residence must be between 2 and 50 characters"),
+
+    body("phoneNumber").not().isEmpty().withMessage("Phone Number is required"),
+
+    body("organisationCompanyName").not().isEmpty().withMessage("Organisation/Company Name is required")
+      .isLength({ min: 2, max: 100 }).withMessage("Organisation/Company Name must be between 2 and 100 characters"),
+
+    body("designationJobTitle").not().isEmpty().withMessage("Designation/Job Title is required")
+      .isLength({ min: 2, max: 100 }).withMessage("Designation/Job Title must be between 2 and 100 characters"),
+
+    body("previousAttendance").isBoolean().withMessage("Previous attendance must be true or false")
+      .not().isEmpty().withMessage("Previous attendance information is required"),
+
+    body("previousExperience").optional(),
+
+    body("attendanceAs").not().isEmpty().withMessage("Attendance type is required"),
+
+    body("hearAboutEvent").not().isEmpty().withMessage("How you heard about the event is required"),
+
+    body("referredBy").optional(),
+
+    body("financialSupport").optional(),
+
+    body("edition2025").not().isEmpty().withMessage("2025 edition selection is required"),
+
+    body("expectations").optional().isLength({ max: 1000 }).withMessage("Expectations must not exceed 1000 characters"),
+
+    body("questionsToAddress").optional().isLength({ max: 1000 }).withMessage("Questions to address must not exceed 1000 characters"),
+
+    body("agreesToCommunications").not().isEmpty().withMessage("Agreement to communications is required").isBoolean().withMessage("Agreement to communications must be true or false"),
+  ];
+};
+
 export const validate = (req: Request, res: Response, next: NextFunction) => {
   const errors = validationResult(req);
   if (errors.isEmpty()) {

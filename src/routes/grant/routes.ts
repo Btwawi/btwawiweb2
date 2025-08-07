@@ -4,6 +4,6 @@ import { grantValidationRules, validate } from '../../middleware/validation/vali
 
 const GrantRouter = express.Router();
 
-GrantRouter.post('/create-grant', grantValidationRules(), validate,  createGrantHandler);
+GrantRouter.post('/request-grant', grantValidationRules(), validate,  createGrantHandler);
 
 export default GrantRouter;
