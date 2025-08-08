@@ -1,6 +1,6 @@
 import { Request, Response } from "express"
 import { createNomination } from "../service/nomination/nomination.service"
-import { sendNominationMail } from "../utils/sendMail"
+import { sendNominationMail } from "../utils/sendNominationMail"
 
 export const createNominationHandler = async (req:Request, res: Response) => {
     try{

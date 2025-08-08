@@ -1,77 +1,47 @@
-import mongoose from "mongoose";
+import { Document, Schema, models, model } from "mongoose"
 
-export interface RegistrationDocument extends mongoose.Document {
-  fullName: string;
+export interface IRegistration extends Document {
   email: string;
-  phoneNum: string;
-  location: string;
-  committee: string;
-  interest: string;
-  skills: string;
-  hoursPerWeek: string;
-  meetingAvailability: string;
-  confidentiality: string;
-  suggestions?: string;
-  additionalComments?: string;
-  createdAt: Date;
-  updatedAt: Date;
+  fullName: string;
+  stateOfResidence: string;
+  phoneNumber: string;
+  organisationCompanyName: string;
+  designationJobTitle: string;
+  previousAttendance: boolean;
+  previousExperience?: string;
+  attendanceAs: string;
+  hearAboutEvent: string;
+  referredBy?: string;
+  financialSupport: boolean;
+  edition2025: string;
+  expectations?: string;
+  questionsToAddress?: string;
+  agreesToCommunications: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
-const registrationSchema = new mongoose.Schema(
+const registrationSchema: Schema = new Schema<IRegistration>(
   {
-    fullName: {
-      type: String,
-      required: true,
-    },
-    phoneNum: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-    email: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-    location: {
-      type: String,
-      required: true,
-    },
-    committee: {
-      type: String,
-      required: true,
-    },
-    interest: {
-      type: String,
-      required: true,
-    },
-    skills: {
-      type: String,
-      required: true,
-    },
-    hoursPerWeek: {
-      type: String,
-      required: true,
-    },
-    meetingAvailability: {
-      type: String,
-      required: true,
-    },
-    confidentiality: {
-      type: String,
-      required: true,
-    },
-    additionalComments: {
-      type: String,
-      required: false,
-    },
+    email: { type: String, required: true },
+    fullName: { type: String, required: true },
+    stateOfResidence: { type: String, required: true },
+    phoneNumber: { type: String, required: true },
+    organisationCompanyName: { type: String, required: true },
+    designationJobTitle: { type: String, required: true },
+    previousAttendance: { type: Boolean, required: true },
+    previousExperience: { type: String },
+    attendanceAs: { type: String, required: true },
+    hearAboutEvent: { type: String, required: true },
+    referredBy: { type: String },
+    financialSupport: { type: Boolean },
+    edition2025: { type: String, required: true },
+    questionsToAddress: { type: String },
+    agreesToCommunications: { type: Boolean, required: true }
   },
   { timestamps: true }
 );
 
-const Registration = mongoose.model<RegistrationDocument>(
-  "registration",
-  registrationSchema
-);
+const Registration = models.Registration || model<IRegistration>("Registration", registrationSchema)
 
-export { Registration };
+export default Registration;

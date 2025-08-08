@@ -1,17 +1,9 @@
-import nodeMailer from "nodemailer";
+import { SendMailClient } from "zeptomail";
 import dotenv from "dotenv";
 
-dotenv.config()
+dotenv.config();
 
+const url = process.env.ZEPTO_API_URL as string;
+const token = process.env.ZEPTO_API_TOKEN as string;
 
-
-export const transporter = nodeMailer.createTransport({
-    service: 'SMTP',
-    host: process.env.ZEPTO_HOST!,
-    port: parseInt(process.env.ZEPTO_PORT!),
-    secure: false,
-    auth: {
-        user: process.env.ZEPTO_USER,
-        pass: process.env.ZEPTO_PASS
-    }
-})
+export const zeptoClient = new SendMailClient({url, token})

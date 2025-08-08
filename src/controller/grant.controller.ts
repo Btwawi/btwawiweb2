@@ -1,7 +1,7 @@
 import { Response, Request } from 'express';
 import { createGrant, validateWithEmail, findGrant } from '../service/grant/grant.service';
 import log from '../logger';
-import { sendBusinessGrantMail } from '../utils/sendMail'
+import { sendBusinessGrantMail } from '../utils/sendBusinessGrantMail'
 
 export const createGrantHandler = async (req:Request, res:Response) => {
     try{
@@ -19,7 +19,7 @@ export const createGrantHandler = async (req:Request, res:Response) => {
 
         const business = await createGrant(newBusiness);
 
-        await sendBusinessGrantMail(business.businessEmailAddress);
+        // await sendBusinessGrantMail(business.businessEmailAddress, business.businessName);
 
         return res.status(200).json({
             success: true,
