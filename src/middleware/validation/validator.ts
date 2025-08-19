@@ -367,20 +367,8 @@ export const grantValidationRules = () => {
         .isLength({ min: 200 }).withMessage("Shariah compliance information must be at least 200 characters"),
     body("howGrantWillBenefit").not().isEmpty().withMessage("Grant benefit explanation is required")
         .isLength({ min: 600 }).withMessage("Grant benefit explanation must be at least 600 characters"),
-    body("haveAttendedBtwawi").isBoolean().withMessage("Btwawi attendance must be true or false"),
-    body("supportingDocuments").isArray({ min: 1 }).withMessage("You must upload at least one document")
-        .custom((documents) => {
-        const validExtensions = ['.pdf', '.doc', '.docx', '.jpg', '.jpeg', '.png'];
-        const invalidDocs = documents.filter((doc: string) => {
-          const extension = doc.toLowerCase().substring(doc.lastIndexOf('.'));
-          return !validExtensions.includes(extension);
-        });
-        
-        if (invalidDocs.length > 0) {
-          throw new Error('All documents must be in PDF, DOC, DOCX, JPG, JPEG, or PNG format');
-        }
-        return true;
-      })
+    body("haveAttendedBtwawi").isString().withMessage("Btwawi attendance must be Yes or No"),
+    body("supportingDocuments").isString().withMessage("Uploaded must be Url string")
   ];
 };
 
@@ -410,46 +398,24 @@ export const boothRegistrationValidationRules = () => {
     body("contactPersonName").not().isEmpty().withMessage("Contact person name is required")
       .isLength({ min: 2, max: 50 }).withMessage("Contact person name must be between 2 and 50 characters").trim(),
     
-    body("phoneNumber").not().isEmpty().withMessage("Phone number is required")
-      .isMobilePhone('any', { strictMode: false }).withMessage("Please provide a valid phone number")
-      .trim(),
+    body("phoneNumber").not().isEmpty().withMessage("Phone number is required"),
+    body("website").optional().isURL().withMessage("Please provide a valid website URL"),
     
-    body("website").optional()
-      .isURL({ 
-        protocols: ['http', 'https'], 
-        require_protocol: false 
-      }).withMessage("Please provide a valid website URL"),
-    
-    body("socialMediaHandles").not().isEmpty().withMessage("Social media handles are required")
-      .isLength({ min: 3, max: 200 }).withMessage("Social media handles must be between 3 and 200 characters")
-      .trim(),
+    body("socialMediaHandles").not().isEmpty().withMessage("Social media handles are required"),
     
     body("pastEditionAttendance").not().isEmpty().withMessage("Past edition attendance information is required"),
     
-    body("experience").optional().isLength({ max: 500 }).withMessage("Experience description cannot exceed 500 characters")
-      .trim(),
+    body("experience").optional(),
     
     body("businessCategory").not().isEmpty().withMessage("Business category is required"),
     
-    body("businessDescription").not().isEmpty().withMessage("Business description is required")
-      .isLength({ min: 100, max: 1000 }).withMessage("Business description must be between 20 and 1000 characters")
-      .trim(),
+    body("businessDescription").not().isEmpty().withMessage("Business description is required"),
     
-    body("exhibitionRequirements").not().isEmpty().withMessage("Exhibition requirements are required")
-      .isLength({ min: 10, max: 500 }).withMessage("Exhibition requirements must be between 10 and 500 characters")
-      .trim(),
+    body("exhibitionRequirements").not().isEmpty().withMessage("Exhibition requirements are required"),
     
     body("exhibitionBudget").not().isEmpty().withMessage("Exhibition budget is required"),
     
-    body("agreeToGuidelines")
-      .not().isEmpty().withMessage("You must agree to the guidelines")
-      .isBoolean().withMessage("Agreement to guidelines must be a boolean value")
-      .custom((value) => {
-        if (value !== true) {
-          throw new Error("You must agree to abide by the event guidelines and ensure Halal compliance");
-        }
-        return true;
-      })
+    body("agreeToGuidelines").not().isEmpty().withMessage("You must agree to the guidelines"),
   ];
 }
 
@@ -475,7 +441,7 @@ export const registrationValidationRules = () => {
     body("designationJobTitle").not().isEmpty().withMessage("Designation/Job Title is required")
       .isLength({ min: 2, max: 100 }).withMessage("Designation/Job Title must be between 2 and 100 characters"),
 
-    body("previousAttendance").isBoolean().withMessage("Previous attendance must be true or false")
+    body("previousAttendance").isString().withMessage("Previous attendance must be Yes or No")
       .not().isEmpty().withMessage("Previous attendance information is required"),
 
     body("previousExperience").optional(),
@@ -494,7 +460,7 @@ export const registrationValidationRules = () => {
 
     body("questionsToAddress").optional().isLength({ max: 1000 }).withMessage("Questions to address must not exceed 1000 characters"),
 
-    body("agreesToCommunications").not().isEmpty().withMessage("Agreement to communications is required").isBoolean().withMessage("Agreement to communications must be true or false"),
+    body("agreesToCommunications").not().isEmpty().withMessage("Agreement to communications is required").isString().withMessage("Agreement to communications must be agree"),
   ];
 };
 

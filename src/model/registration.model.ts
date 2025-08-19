@@ -7,16 +7,16 @@ export interface IRegistration extends Document {
   phoneNumber: string;
   organisationCompanyName: string;
   designationJobTitle: string;
-  previousAttendance: boolean;
+  previousAttendance: string;
   previousExperience?: string;
   attendanceAs: string;
   hearAboutEvent: string;
   referredBy?: string;
-  financialSupport: boolean;
+  financialSupport: string;
   edition2025: string;
   expectations?: string;
   questionsToAddress?: string;
-  agreesToCommunications: boolean;
+  agreesToCommunications: string;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -29,15 +29,15 @@ const registrationSchema: Schema = new Schema<IRegistration>(
     phoneNumber: { type: String, required: true },
     organisationCompanyName: { type: String, required: true },
     designationJobTitle: { type: String, required: true },
-    previousAttendance: { type: Boolean, required: true },
+    previousAttendance: { type: String, required: true },
     previousExperience: { type: String },
     attendanceAs: { type: String, required: true },
     hearAboutEvent: { type: String, required: true },
     referredBy: { type: String },
-    financialSupport: { type: Boolean },
+    financialSupport: { type: String },
     edition2025: { type: String, required: true },
     questionsToAddress: { type: String },
-    agreesToCommunications: { type: Boolean, required: true }
+    agreesToCommunications: { type: String, required: true }
   },
   { timestamps: true }
 );

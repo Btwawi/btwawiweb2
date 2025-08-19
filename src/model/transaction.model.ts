@@ -5,7 +5,7 @@ export interface TransactionDocument extends mongoose.Document {
   fullName: string;
   description?: string;
   total: string;
-  paymentVerified: boolean;
+  paymentVerified: string;
   editionPaidFor: string;
   email: string;
 }
@@ -17,7 +17,7 @@ const transactionSchema = new mongoose.Schema(
     referenceId: { type: String, require: true },
     description: { type: String, require: false },
     total: { type: String, require: true },
-    paymentVerified: { type: Boolean, require: true, default: false },
+    paymentVerified: { type: String, require: true, default: false },
     editionPaidFor: {
       type: String,
       require: true,

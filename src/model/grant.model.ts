@@ -13,8 +13,8 @@ export interface IGrant extends Document {
     businessContribution: string;
     businessShariahCompliance: string;
     howGrantWillBenefit: string;
-    haveAttendedBtwawi: boolean;
-    supportingDocuments: string[];
+    haveAttendedBtwawi: string;
+    supportingDocuments: string;
     createdAt?: Date;
     updatedAt?: Date;
 }
@@ -32,8 +32,8 @@ const GrantSchema = new Schema<IGrant>({
     businessContribution: { type: String, required: true },
     businessShariahCompliance: { type: String, required: true },
     howGrantWillBenefit: { type: String, required: true },
-    haveAttendedBtwawi: { type: Boolean, required: true },
-    supportingDocuments: { type: [String], required: true },
+    haveAttendedBtwawi: { type: String, required: true },
+    supportingDocuments: { type: String, required: true },
 }, {
     timestamps: true,
 })
